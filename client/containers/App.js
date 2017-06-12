@@ -1,7 +1,12 @@
 import React from 'react';
+import NavigationBar from '../components/NavigationBar';
 
 export default class App extends React.Component {
     render() {
-        return <h1>Welcom to React world!</h1>
+        return (
+            <div className="container-fluid">
+                <NavigationBar />
+            </div>
+        );
     }
 }
