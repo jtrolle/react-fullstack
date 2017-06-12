@@ -1,2 +1,2 @@
-# react-redux-demo
-Simple demo of using React and Redux
+# React redux demo
+Simple demo of using React, Redux and Webpack Middleware (NodeJS)
