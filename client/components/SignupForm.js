@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import timezones from '../data/timezones';
 
@@ -25,7 +26,7 @@ class SignupForm extends React.Component {
 
     handleSubmit(ev) {
         ev.preventDefault();
-        console.log(this.state);
+        this.props.signupRequest(this.state);
     }
 
     render() {
@@ -86,7 +87,7 @@ class SignupForm extends React.Component {
                         className="form-control"
                         name="timezone">
                         <option value="">Choose your timezone</option>
-                        {Object.keys(timezones).map(key => <option value={timezones[key]}>{key}</option>)}
+                        {Object.keys(timezones).map(key => <option key={key} value={timezones[key]}>{key}</option>)}
                     </select>
                 </div>
 
@@ -94,6 +95,10 @@ class SignupForm extends React.Component {
             </form>
         );
     }
+}
+
+SignupForm.propTypes = {
+    signupRequest: PropTypes.func.isRequired
 }
 
 export default SignupForm;
