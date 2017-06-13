@@ -1,7 +1,6 @@
-import Home from './containers/Home';
 import About from './containers/About';
-import Projects from './components/Projects';
-import Studies from './components/Studies';
+import Home from './containers/Home';
+import SignupPage from './containers/signup/SignupPage';
 
 export default [
     {
@@ -12,6 +11,11 @@ export default [
     {
         path: '/about',
         component: About,
+        exact: true
+    },
+    {
+        path: '/signup',
+        component: SignupPage,
         exact: true
     }
 ]
