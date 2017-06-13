@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
 import routes from '../routes';
 
-export default class App extends React.Component {
+class App extends React.Component {
     render() {
         return (
             <div>
@@ -20,3 +20,5 @@ export default class App extends React.Component {
         );
     }
 }
+
+export default App;

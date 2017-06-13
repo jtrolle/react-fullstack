@@ -1,16 +1,19 @@
 import React from 'react';
 
-export default class SignupPage extends React.Component {
-  constructor() {
-    super();
-    this.state = { someKey: 'Sign in' };
-  }
+import SignupForm from '../../components/SignupForm';
 
+class SignupPage extends React.Component {
   render() {
-    return <h1>{this.state.someKey}</h1>;
-  }
-
-  componentDidMount() {
-    this.setState({ someKey: 'Sign up' });
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <SignupForm />
+          </div>
+        </div>
+      </div>
+    );
   }
 }
+
+export default SignupPage;
