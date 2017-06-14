@@ -1,7 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
+import classnames from 'classnames';
 import map from 'lodash/map';
+import PropTypes from 'prop-types';
 
 import timezones from '../data/timezones';
 
@@ -11,6 +12,7 @@ class SignupForm extends React.Component {
         this.state = {
             email: '',
             errors: {},
+            isLoading: false,
             password: '',
             passwordConfirm: '',
             username: '',
@@ -31,7 +33,7 @@ class SignupForm extends React.Component {
         ev.preventDefault();
         this.setState({ errors: {} })
         this.props.signupRequest(this.state).then(
-            () => { },
+            () => this.setState({ isLoading: false }),
             err => this.setState({ errors: err.response.data })
         );
     }
@@ -41,11 +43,11 @@ class SignupForm extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <h1>Join our community!</h1>
-                <div className={errors.email ? 'form-group has-danger' : 'form-group'}>
+                <div className={classnames('form-group', { 'has-danger': errors.email })}>
                     <label htmlFor="email">Email</label>
                     <input
                         type="email"
-                        className={errors.email ? 'form-control form-control-danger' : 'form-control'}
+                        className={classnames('form-control', { 'form-control-danger': errors.email })}
                         aria-describedby="emailHelp"
                         name="email"
                         value={this.state.email}
@@ -55,11 +57,11 @@ class SignupForm extends React.Component {
                     {errors.email && <div className="form-control-feedback">{errors.email}</div>}
                 </div>
 
-                <div className={errors.password ? 'form-group has-danger' : 'form-group'}>
+                <div className={classnames('form-group', { 'has-danger': errors.password })}>
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
-                        className={errors.password ? 'form-control form-control-danger' : 'form-control'}
+                        className={classnames('form-control', { 'form-control-danger': errors.password })}
                         aria-describedby="passwordHelp"
                         name="password"
                         value={this.state.password}
@@ -68,11 +70,11 @@ class SignupForm extends React.Component {
                     {errors.password && <div className="form-control-feedback">{errors.password}</div>}
                 </div>
 
-                <div className={errors.passwordConfirm ? 'form-group has-danger' : 'form-group'}>
+                <div className={classnames('form-group', { 'has-danger': errors.passwordConfirm })}>
                     <label htmlFor="passwordConfirm">Confirm password</label>
                     <input
                         type="password"
-                        className={errors.passwordConfirm ? 'form-control form-control-danger' : 'form-control'}
+                        className={classnames('form-control', { 'form-control-danger': errors.passwordConfirm })}
                         aria-describedby="passwordConfirmHelp"
                         name="passwordConfirm"
                         value={this.state.passwordConfirm}
@@ -81,11 +83,11 @@ class SignupForm extends React.Component {
                     {errors.passwordConfirm && <div className="form-control-feedback">{errors.passwordConfirm}</div>}
                 </div>
 
-                <div className={errors.username ? 'form-group has-danger' : 'form-group'}>
+                <div className={classnames('form-group', { 'has-danger': errors.username })}>
                     <label htmlFor="username">Username</label>
                     <input
                         type="text"
-                        className={errors.username ? 'form-control form-control-danger' : 'form-control'}
+                        className={classnames('form-control', { 'form-control-danger': errors.username })}
                         aria-describedby="usernameHelp"
                         name="username"
                         onChange={this.handleChange}
@@ -94,11 +96,11 @@ class SignupForm extends React.Component {
                     {errors.username && <div className="form-control-feedback">{errors.username}</div>}
                 </div>
 
-                <div className={errors.timezone ? 'form-group has-danger' : 'form-group'}>
+                <div className={classnames('form-group', { 'has-danger': errors.timezone })}>
                     <label htmlFor="timezone">Timezone</label>
                     <select
-                        className={errors.timezone ? 'form-control form-control-danger' : 'form-control'}
-                         aria-describedby="timezoneHelp"
+                        className={classnames('form-control', { 'form-control-danger': errors.timezone })}
+                        aria-describedby="timezoneHelp"
                         name="timezone"
                         onChange={this.handleChange}
                         value={this.state.timezone}
@@ -109,7 +111,7 @@ class SignupForm extends React.Component {
                     {errors.timezone && <div className="form-control-feedback">{errors.timezone}</div>}
                 </div>
 
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" disabled={this.state.isLoading} className="btn btn-primary">Submit</button>
             </form>
         );
     }
