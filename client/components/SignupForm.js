@@ -4,6 +4,8 @@ import classnames from 'classnames';
 import map from 'lodash/map';
 import PropTypes from 'prop-types';
 
+import validateInput from '../../server/shared/validations/signup';
+import TextFieldGroup from './TextFieldGroup';
 import timezones from '../data/timezones';
 
 class SignupForm extends React.Component {
@@ -19,8 +21,20 @@ class SignupForm extends React.Component {
             timezone: ''
         };
 
+
+        this.formIsValid = this.formIsValid.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    formIsValid() {
+        let { errors, isValid } = validateInput(this.state);
+
+        if (!isValid) {
+            this.setState({ errors })
+        }
+
+        return isValid;
     }
 
     handleChange(ev) {
@@ -31,11 +45,13 @@ class SignupForm extends React.Component {
 
     handleSubmit(ev) {
         ev.preventDefault();
-        this.setState({ errors: {} })
-        this.props.signupRequest(this.state).then(
-            () => this.setState({ isLoading: false }),
-            err => this.setState({ errors: err.response.data })
-        );
+        if (this.formIsValid()) {
+            this.setState({ errors: {} })
+            this.props.signupRequest(this.state).then(
+                () => this.setState({ isLoading: false }),
+                err => this.setState({ errors: err.response.data })
+            );
+        }
     }
 
     render() {
@@ -43,58 +59,40 @@ class SignupForm extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <h1>Join our community!</h1>
-                <div className={classnames('form-group', { 'has-danger': errors.email })}>
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        className={classnames('form-control', { 'form-control-danger': errors.email })}
-                        aria-describedby="emailHelp"
-                        name="email"
-                        value={this.state.email}
-                        onChange={this.handleChange}
-                        placeholder="name@example.com"
-                    />
-                    {errors.email && <div className="form-control-feedback">{errors.email}</div>}
-                </div>
+                <TextFieldGroup
+                    error={errors.email}
+                    label="Email"
+                    name="email"
+                    onChange={this.handleChange}
+                    value={this.state.email}
+                    type="email"
+                />
 
-                <div className={classnames('form-group', { 'has-danger': errors.password })}>
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        className={classnames('form-control', { 'form-control-danger': errors.password })}
-                        aria-describedby="passwordHelp"
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                    />
-                    {errors.password && <div className="form-control-feedback">{errors.password}</div>}
-                </div>
+                <TextFieldGroup
+                    error={errors.password}
+                    label="Password"
+                    name="password"
+                    onChange={this.handleChange}
+                    value={this.state.password}
+                    type="password"
+                />
 
-                <div className={classnames('form-group', { 'has-danger': errors.passwordConfirm })}>
-                    <label htmlFor="passwordConfirm">Confirm password</label>
-                    <input
-                        type="password"
-                        className={classnames('form-control', { 'form-control-danger': errors.passwordConfirm })}
-                        aria-describedby="passwordConfirmHelp"
-                        name="passwordConfirm"
-                        value={this.state.passwordConfirm}
-                        onChange={this.handleChange}
-                    />
-                    {errors.passwordConfirm && <div className="form-control-feedback">{errors.passwordConfirm}</div>}
-                </div>
+                <TextFieldGroup
+                    error={errors.passwordConfirm}
+                    label="Confirm password"
+                    name="passwordConfirm"
+                    onChange={this.handleChange}
+                    value={this.state.passwordConfirm}
+                    type="password"
+                />
 
-                <div className={classnames('form-group', { 'has-danger': errors.username })}>
-                    <label htmlFor="username">Username</label>
-                    <input
-                        type="text"
-                        className={classnames('form-control', { 'form-control-danger': errors.username })}
-                        aria-describedby="usernameHelp"
-                        name="username"
-                        onChange={this.handleChange}
-                        value={this.state.timezone}
-                    />
-                    {errors.username && <div className="form-control-feedback">{errors.username}</div>}
-                </div>
+                <TextFieldGroup
+                    error={errors.username}
+                    label="Username"
+                    name="username"
+                    onChange={this.handleChange}
+                    value={this.state.username}
+                />
 
                 <div className={classnames('form-group', { 'has-danger': errors.timezone })}>
                     <label htmlFor="timezone">Timezone</label>

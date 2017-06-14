@@ -22,7 +22,10 @@ export default {
             {
                 test: /\.js$/,
                 exclude: [/node_modules/],
-                include: resolve(__dirname, './client'),
+                include: [
+                    resolve(__dirname, './client'),
+                    resolve(__dirname, './server/shared')
+                ],
                 loaders: ['react-hot-loader', 'babel-loader']
             }
         ]
