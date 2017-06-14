@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import map from 'lodash/map';
+
 import timezones from '../data/timezones';
 
 class SignupForm extends React.Component {
@@ -8,6 +10,7 @@ class SignupForm extends React.Component {
         super(props);
         this.state = {
             email: '',
+            errors: {},
             password: '',
             passwordConfirm: '',
             username: '',
@@ -26,26 +29,33 @@ class SignupForm extends React.Component {
 
     handleSubmit(ev) {
         ev.preventDefault();
-        this.props.signupRequest(this.state);
+        this.setState({ errors: {} })
+        this.props.signupRequest(this.state).then(
+            () => {},
+            err => this.setState({ errors: err.response.data })
+        );
     }
 
     render() {
+        let { errors } = this.state;
         return (
             <form onSubmit={this.handleSubmit}>
                 <h1>Join our community!</h1>
-                <div className="form-group">
+                <div className={errors.email ? 'form-group has-danger' : 'form-group'}>
                     <label htmlFor="email">Email</label>
                     <input
                         type="email"
-                        className="form-control"
+                        className={errors.email ? 'form-control form-control-danger' : 'form-control'}
                         aria-describedby="emailHelp"
                         name="email"
                         value={this.state.email}
                         onChange={this.handleChange}
+                        placeholder="name@example.com"
                     />
+                    {errors.email && <div className="form-control-feedback">{errors.email}</div>}
                 </div>
 
-                <div className="form-group">
+                <div className={errors.password ? 'form-group has-danger' : 'form-group'}>
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
@@ -87,7 +97,7 @@ class SignupForm extends React.Component {
                         className="form-control"
                         name="timezone">
                         <option value="">Choose your timezone</option>
-                        {Object.keys(timezones).map(key => <option key={key} value={timezones[key]}>{key}</option>)}
+                        {map(timezones, (timezone, key) => <option key={key} value={timezones[key]}>{key}</option>)}}
                     </select>
                 </div>
 

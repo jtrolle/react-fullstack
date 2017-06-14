@@ -7,11 +7,12 @@ import SignupForm from '../../components/SignupForm';
 
 class SignupPage extends React.Component {
   render() {
+    const { userSignupRequest } = this.props;
     return (
       <div className="container">
         <div className="row">
           <div className="col">
-            <SignupForm signupRequest={this.props.userSignupRequest}/>
+            <SignupForm signupRequest={userSignupRequest}/>
           </div>
         </div>
       </div>
