@@ -1,4 +1,5 @@
 import React from 'react';
+import { createBrowserHistory } from 'history';
 
 import classnames from 'classnames';
 import map from 'lodash/map';
@@ -7,6 +8,10 @@ import PropTypes from 'prop-types';
 import validateInput from '../../server/shared/validations/signup';
 import TextFieldGroup from './TextFieldGroup';
 import timezones from '../data/timezones';
+
+const history = createBrowserHistory({
+    forceRefresh: true
+});
 
 class SignupForm extends React.Component {
     constructor(props) {
@@ -48,8 +53,11 @@ class SignupForm extends React.Component {
         if (this.formIsValid()) {
             this.setState({ errors: {} })
             this.props.signupRequest(this.state).then(
-                () => this.setState({ isLoading: false }),
-                err => this.setState({ errors: err.response.data })
+                () => {
+                    this.setState({ isLoading: false });
+                    history.push('/');
+                },
+                err => this.setState({ errors: err.response.data, isLoading: false })
             );
         }
     }
