@@ -1,2 +1,2 @@
-# React redux demo
-Simple demo of using React, Redux and Webpack Middleware (NodeJS)
+# React Fullstack
+A complete demo of using React Redux Webpack and Node.js
