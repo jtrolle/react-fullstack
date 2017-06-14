@@ -12,7 +12,7 @@ class SignupPage extends React.Component {
       <div className="container">
         <div className="row">
           <div className="col">
-            <SignupForm signupRequest={userSignupRequest}/>
+            <SignupForm signupRequest={userSignupRequest} history={this.props.history} />
           </div>
         </div>
       </div>
