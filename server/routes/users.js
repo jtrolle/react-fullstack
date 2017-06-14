@@ -27,6 +27,10 @@ const validateInput = data => {
         errors.passwordConfirm = 'PAsswords must match';
     }
 
+    if (validator.isEmpty(data.username)) {
+        errors.username = 'This field is required';
+    }
+
     if (validator.isEmpty(data.timezone)) {
         errors.timezone = 'This field is required';
     }

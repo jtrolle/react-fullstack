@@ -31,7 +31,7 @@ class SignupForm extends React.Component {
         ev.preventDefault();
         this.setState({ errors: {} })
         this.props.signupRequest(this.state).then(
-            () => {},
+            () => { },
             err => this.setState({ errors: err.response.data })
         );
     }
@@ -59,46 +59,54 @@ class SignupForm extends React.Component {
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
-                        className="form-control"
+                        className={errors.password ? 'form-control form-control-danger' : 'form-control'}
                         aria-describedby="passwordHelp"
                         name="password"
                         value={this.state.password}
                         onChange={this.handleChange}
                     />
+                    {errors.password && <div className="form-control-feedback">{errors.password}</div>}
                 </div>
 
-                <div className="form-group">
+                <div className={errors.passwordConfirm ? 'form-group has-danger' : 'form-group'}>
                     <label htmlFor="passwordConfirm">Confirm password</label>
                     <input
                         type="password"
-                        className="form-control"
+                        className={errors.passwordConfirm ? 'form-control form-control-danger' : 'form-control'}
                         aria-describedby="passwordConfirmHelp"
                         name="passwordConfirm"
                         value={this.state.passwordConfirm}
                         onChange={this.handleChange}
                     />
+                    {errors.passwordConfirm && <div className="form-control-feedback">{errors.passwordConfirm}</div>}
                 </div>
 
-                <div className="form-group">
+                <div className={errors.username ? 'form-group has-danger' : 'form-group'}>
                     <label htmlFor="username">Username</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className={errors.username ? 'form-control form-control-danger' : 'form-control'}
                         aria-describedby="usernameHelp"
                         name="username"
-                        value={this.state.username}
                         onChange={this.handleChange}
+                        value={this.state.timezone}
                     />
+                    {errors.username && <div className="form-control-feedback">{errors.username}</div>}
                 </div>
 
-                <div className="form-group">
+                <div className={errors.timezone ? 'form-group has-danger' : 'form-group'}>
                     <label htmlFor="timezone">Timezone</label>
                     <select
-                        className="form-control"
-                        name="timezone">
+                        className={errors.timezone ? 'form-control form-control-danger' : 'form-control'}
+                         aria-describedby="timezoneHelp"
+                        name="timezone"
+                        onChange={this.handleChange}
+                        value={this.state.timezone}
+                    >
                         <option value="">Choose your timezone</option>
-                        {map(timezones, (timezone, key) => <option key={key} value={timezones[key]}>{key}</option>)}}
+                        {map(timezones, (val, key) => <option key={val} value={key}>{key}</option>)}
                     </select>
+                    {errors.timezone && <div className="form-control-feedback">{errors.timezone}</div>}
                 </div>
 
                 <button type="submit" className="btn btn-primary">Submit</button>
