@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router-dom';
+import FlashMessagesList from '../components/flash-messages/FlashMessagesList';
 import NavigationBar from '../components/NavigationBar';
 import routes from '../routes';
 
@@ -8,6 +9,7 @@ class App extends React.Component {
         return (
             <div>
                 <NavigationBar />
+                <FlashMessagesList />
                 {routes.map((route, index) => (
                     <Route
                         key={index}
