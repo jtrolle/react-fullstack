@@ -50,6 +50,10 @@ class SignupForm extends React.Component {
             this.props.signupRequest(this.state).then(
                 () => {
                     this.setState({ isLoading: false });
+                    this.props.addFlashMessage({
+                        type: 'success',
+                        text: 'Registration successfully!'
+                    });
                     this.props.history.push('/');
                 },
                 err => this.setState({ errors: err.response.data, isLoading: false })
@@ -119,6 +123,7 @@ class SignupForm extends React.Component {
 }
 
 SignupForm.propTypes = {
+    addFlashMessage: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     signupRequest: PropTypes.func.isRequired
 }

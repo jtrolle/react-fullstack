@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default () => {
+const NavigationBar = () => {
     return (
         <nav className="navbar navbar-toggleable-md navbar-inverse bg-inverse">
             <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,3 +27,5 @@ export default () => {
         </nav>
     );
 }
+
+export default NavigationBar;
